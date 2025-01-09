@@ -2,9 +2,8 @@ import Typography from "../../components/Typography";
 import Styles from "./CartPage.module.css";
 import { useNavigate } from "react-router-dom";
 import { Product } from "../../common/types/product";
-import CartItem from "../../components/CartItem";
-import CartEmptyMessage from "../../components/CartEmptyMessage";
 import CartSumarry from "../../components/CartSummary";
+import CartList from "../../components/CartList";
 
 type CartPageProps = {
   cartItems: Product[];
@@ -26,23 +25,11 @@ const CartPage = ({ cartItems, removeFromCart }: CartPageProps) => {
       <div className={Styles.cartTitle}>
         <Typography variant="h4">Carrinho de Compras</Typography>
       </div>
-
       <section className={Styles.cartPage}>
-        <div className={Styles.cartItems}>
-          <Typography
-            variantStyle="body-large-bold"
-            className={Styles.cartItemTitle}
-          >
-            Detalhes da compra
-          </Typography>
-          {cartItems?.length > 0 ? (
-            cartItems.map((item) => (
-              <CartItem item={item} removeFromCart={removeFromCart} />
-            ))
-          ) : (
-            <CartEmptyMessage />
-          )}
-        </div>
+       <CartList 
+         cartItems={cartItems}
+         onRemove={removeFromCart}
+        />
        <CartSumarry
         cartItems={cartItems}
         freight={freight}

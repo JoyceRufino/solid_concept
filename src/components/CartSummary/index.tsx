@@ -2,18 +2,18 @@ import Typography from "../Typography";
 import Field from "../Field";
 import Divider from "../Divider";
 import { ShoppingBagIcon } from "../../common/icons/ShoppingBagIcon";
-import Button from "../Button";
-import Styles from './CartSummary.module.css'
+import Styles from "./CartSummary.module.css";
 import { Product } from "../../common/types/product";
+import CartActions from "../CartActions";
 
 type Props = {
-    cartItems: Product[];
-    total: number;
-    freight: number;
-    handleRedirect: () => void;
+  cartItems: Product[];
+  total: number;
+  freight: number;
+  handleRedirect: () => void;
 };
 
-const CartSumarry = ({ cartItems, total, freight, handleRedirect}: Props) => {
+const CartSumarry = ({ cartItems, total, freight, handleRedirect }: Props) => {
   return (
     <div className={Styles.cartSummary}>
       <Typography variantStyle="heading-small">Sumário</Typography>
@@ -45,14 +45,7 @@ const CartSumarry = ({ cartItems, total, freight, handleRedirect}: Props) => {
           R$ {total + freight}
         </Typography>
       </div>
-      <div className={Styles.cartActions}>
-        <Button onClick={handleRedirect} variant="secondary">
-          Continuar comprando
-        </Button>
-        <Button onClick={() => console.log("pagamento")}>
-          Ir para pagamento
-        </Button>
-      </div>
+      <CartActions handleRedirect={handleRedirect} />
     </div>
   );
 };
