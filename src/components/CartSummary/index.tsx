@@ -3,17 +3,16 @@ import Field from "../Field";
 import Divider from "../Divider";
 import { ShoppingBagIcon } from "../../common/icons/ShoppingBagIcon";
 import Styles from "./CartSummary.module.css";
-import { Product } from "../../common/types/product";
 import CartActions from "../CartActions";
 
 type Props = {
-  cartItems: Product[];
+  itemCount: number;
   total: number;
   freight: number;
   handleRedirect: () => void;
 };
 
-const CartSumarry = ({ cartItems, total, freight, handleRedirect }: Props) => {
+const CartSumarry = ({ itemCount, total, freight, handleRedirect }: Props) => {
   return (
     <div className={Styles.cartSummary}>
       <Typography variantStyle="heading-small">Sumário</Typography>
@@ -29,7 +28,7 @@ const CartSumarry = ({ cartItems, total, freight, handleRedirect }: Props) => {
       </div>
       <div className={Styles.summaryResume}>
         <Typography variantStyle="body-small-bold">
-          {cartItems.length} Produtos
+          {itemCount} {itemCount > 1 ? "Produtos" : "Produto"}
         </Typography>
         <Typography variantStyle="body-small-bold">R$ {total}</Typography>
         <Typography variantStyle="body-small-bold">Frete:</Typography>

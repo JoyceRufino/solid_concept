@@ -8,9 +8,10 @@ import CartList from "../../components/CartList";
 type CartPageProps = {
   cartItems: Product[];
   removeFromCart: (id: number) => void;
+  cardCount: number
 };
 
-const CartPage = ({ cartItems, removeFromCart }: CartPageProps) => {
+const CartPage = ({ cartItems, removeFromCart, cardCount }: CartPageProps) => {
   const total = cartItems.reduce((acc, item) => acc + item.price, 0);
   const freight = cartItems.length > 0 ? 8 : 0;
 
@@ -31,7 +32,7 @@ const CartPage = ({ cartItems, removeFromCart }: CartPageProps) => {
          onRemove={removeFromCart}
         />
        <CartSumarry
-        cartItems={cartItems}
+        itemCount={cardCount}
         freight={freight}
         total={total}
         handleRedirect={handleRedirect}

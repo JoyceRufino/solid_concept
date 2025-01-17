@@ -37,6 +37,7 @@ function HomePage() {
       .catch((err) => {
         setCategoriesError("Erro ao carregar categorias.");
         setIsLoadingCategories(false);
+        console.log(err)
       });
   }, []);
 
@@ -51,6 +52,7 @@ function HomePage() {
       .catch((err) => {
         setProductsError("Erro ao carregar produtos.");
         setIsLoadingProducts(false);
+        console.log(err)
       });
   }, []);
 
