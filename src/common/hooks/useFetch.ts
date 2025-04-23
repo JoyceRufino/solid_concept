@@ -1,29 +1,36 @@
-import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
+import Http from "../lib/httpClient";
+import { IHttp } from "../lib/httpClient/http.interface";
 
-type FetchResult<T> ={
-    data: T | null;
-    isLoading: boolean;
-    error: string | null;
-}
+type FetchResult<T> = {
+  data: T | null;
+  isLoading: boolean;
+  error: string | null;
+};
 
-const useFetch =  <T>(url: string): FetchResult<T> => {
-    const [data, setData] = useState<T | null>(null)
-    const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState<string | null>(null)
+const useFetch = <T>(url: string): FetchResult<T> => {
+  const [data, setData] = useState<T | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        setIsLoading(true)
-        axios.get(url).then((response: AxiosResponse) => {
-            setData(response.data)
-            setIsLoading(false)
-        }).catch((err) => {
-            setError('Erro ao carregar dados')
-            setIsLoading(false)
-            console.log(err)
-        })
-    }, [url])
-    return {data, isLoading,error}
-}
+  const http: IHttp = Http();
 
-export default useFetch
+  useEffect(() => {
+    setIsLoading(true);
+    http
+      .get<T>(url)
+      .then((response) => {
+        setData(response);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError("Erro ao carregar dados");
+        setIsLoading(false);
+        console.log(err);
+      });
+  }, [url]);
+
+  return { data, isLoading, error };
+};
+
+export default useFetch;
