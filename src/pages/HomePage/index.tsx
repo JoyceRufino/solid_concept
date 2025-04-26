@@ -7,11 +7,15 @@ import Typography from "../../components/Typography";
 import { Category } from "../../common/types/category";
 import {
   CATEGORIES_BASE_URL,
-  PRODUCTS_BASE_URL,
 } from "../../common/constants/endpoints";
-import { Product } from "../../common/types/product";
 import StatusHandler from "../../common/utils/statusHandler";
 import useFetch from "../../common/hooks/useFetch";
+import Http from "../../common/lib/httpClient";
+import ProductService from "../../common/services/productServices";
+import useFetchProducts from "../../common/hooks/useFecthProducts";
+
+const httpService = Http()
+const productService = ProductService(httpService)
 
 function HomePage() {
   const handleSubscribe = (email: string) => {
@@ -25,10 +29,10 @@ function HomePage() {
   } = useFetch<{ categories: Category[] }>(CATEGORIES_BASE_URL);
 
   const {
-    data: productData,
+    products,
     isLoading: isLoadingProducts,
     error: productsError
-  } = useFetch<{products: Product[]}>(PRODUCTS_BASE_URL)
+  } = useFetchProducts(productService)
 
   return (
     <>
@@ -51,8 +55,8 @@ function HomePage() {
           )}
         </StatusHandler>
         <StatusHandler isLoading={isLoadingProducts} error={productsError}>
-         {productData && (
-           <ProductList title="Promoções especiais" products={productData?.products} />
+         {products && (
+           <ProductList title="Promoções especiais" products={products} />
          )}
         </StatusHandler>
       </main>
